@@ -8,6 +8,7 @@ from m3o_plugin.address import M3oAddress
 from m3o_plugin.crypto import M3oCrypto
 from m3o_plugin.currency import M3oCurrency
 from m3o_plugin.email import M3oEmail
+from m3o_plugin.helloworld import M3oHelloWorld
 
 
 class M3o(
@@ -18,6 +19,7 @@ class M3o(
     M3oCrypto,
     M3oCurrency,
     M3oEmail,
+    M3oHelloWorld,
 
 ):
     def __init__(self, token, version="v1"):
@@ -35,6 +37,7 @@ class M3o(
         M3oCrypto.__init__(self)
         M3oCurrency.__init__(self)
         M3oEmail.__init__(self)
+        M3oHelloWorld.__init__(self)
 
     def _general_func(self, data, service, endpoint, version, status_code=200):
         service_endpoint = {"service": service, "endpoint": endpoint, "version": version}
@@ -43,6 +46,3 @@ class M3o(
         payload = json.dumps(data)
         response = self.requests.post(hostname, data=payload)
         return response.json() if response.status_code == status_code else response.text
-
-    def helloworld_call(self, data):
-        return self._general_func(data, "helloworld", "Call", self.version)
